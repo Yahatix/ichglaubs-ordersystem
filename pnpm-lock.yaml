@@ -17,6 +17,7 @@ specifiers:
   prettier-plugin-tailwindcss: ^0.1.13
   svelte: ^3.50.1
   svelte-check: ^2.9.0
+  svelte-icons: ^2.1.0
   svelte-preprocess: ^4.10.7
   tailwindcss: ^3.1.8
   tslib: ^2.4.0
@@ -40,6 +41,7 @@ devDependencies:
   prettier-plugin-tailwindcss: 0.1.13_prettier@2.7.1
   svelte: 3.50.1
   svelte-check: 2.9.0_zy537mcxrfn3wq4nghluxnsi5a
+  svelte-icons: 2.1.0
   svelte-preprocess: 4.10.7_sxt3mkf5m54vn3maobdwhqzitu
   tailwindcss: 3.1.8_postcss@8.4.16
   tslib: 2.4.0
@@ -2267,6 +2269,10 @@ packages:
       svelte: '>=3.19.0'
     dependencies:
       svelte: 3.50.1
+    dev: true
+
+  /svelte-icons/2.1.0:
+    resolution: {integrity: sha512-rHPQjweEc9fGSnvM0/4gA3pDHwyZyYsC5KhttCZRhSMJfLttJST5Uq0B16Czhw+HQ+HbSOk8kLigMlPs7gZtfg==}
     dev: true
 
   /svelte-preprocess/4.10.7_sxt3mkf5m54vn3maobdwhqzitu:

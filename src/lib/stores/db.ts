@@ -1,12 +1,13 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, type SupabaseRealtimePayload } from '@supabase/supabase-js'
 import { writable } from 'svelte/store'
 
-type Topping = 'Schoko' | 'Schoko+Banane' | 'Zimt-Zucker' | 'Apfelmus';
+type Topping = 'Schoko' | 'Schoko+Banane' | 'Zimt+Zucker' | 'Apfelmus';
 export type TOrder = {
   nr: number;
   type: `Crepes`;
   done: boolean;
   topping: Topping;
+  extraWish: string
 };
 
 const supabase = createClient(
@@ -17,14 +18,14 @@ const supabase = createClient(
 const userStore = writable(supabase.auth.user())
 
 supabase.auth.onAuthStateChange((event, session) => {
-  if (event == 'SIGNED_IN') {
+  if (event == 'SIGNED_IN' && session) {
     userStore.set(session.user)
   } else if (event == 'SIGNED_OUT') {
     userStore.set(null)
   }
 })
 
-export default {
+const db = {
   get user() {
     return userStore
   },
@@ -48,16 +49,27 @@ export default {
         .from('orders')
         .insert(order)
 
-      return body[0]
+      return body?.[0]
     },
 
     async finishOrder(order: TOrder) {
       const { body } = await supabase
         .from('orders')
         .update({ done: true })
-        .match({ id: order.nr })
+        .match({ nr: order.nr })
 
-      return body[0]
+      return body?.[0]
     }
   }
 }
+
+export const orders = writable<TOrder[]>([])
+
+supabase.from("orders").on("INSERT", (payload: SupabaseRealtimePayload<TOrder>) => {
+  orders.update(val => {
+    return [...val, payload.new]
+  })
+}).subscribe()
+
+
+export default db

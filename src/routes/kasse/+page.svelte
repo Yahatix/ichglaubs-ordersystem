@@ -1,42 +1,21 @@
 <script lang="ts">
-	import { orders, type TOrder } from "$lib/stores/orders.client";
-  import userStore from "$lib/stores/db"
-	import { onMount } from "svelte";
+	import Item from '$lib/components/Item.svelte';
+	import type { TOrder } from '$lib/stores/db';
 
-	let order: TOrder | undefined;
-
-onMount(async () => {
-  console.log(await userStore.orders.get());
-  
-})  
-
-	const sendOrderToKitchen = () => {
-		order = {
-			nr: $orders.length,
-      done: false,
-			type: 'Crepes',
-      topping: 'Apfelmus'
-		};
-		wsc?.send(JSON.stringify(order));
-    $orders = [...$orders, order]
-		order = undefined;
-	};
+	const toppings: TOrder['topping'][] = ['Schoko', 'Schoko+Banane', 'Apfelmus', 'Zimt+Zucker'];
 </script>
 
-<div style="background-image: radial-gradient(hsla(var(--bc)/.2) .5px,hsla(var(--b2)/1) .5px); background-size: 5px 5px;" class="bg-top bg-base-200 border-base-300 rounded-b-box">
-	<div class="flex flex-col">
-		{#each ["Schoko","Banana","Apfelmus"] as item}
-    <div class="card w-96 bg-base-100 shadow-xl">
-			<figure><img src={`/images/${item}_Crepes.png`} alt={item} /></figure>
-			<div class="card-body">
-				<h2 class="card-title">{item}</h2>
-			</div>
-		</div>
-    {/each}
-		<div>Schoko+Banane</div>
-		<div>Zimt+Zucker</div>
-		<div>Apfelmus</div>
-		<input class="input input-bordered" type="text" placeholder="Sonderwünsche" />
-		<button class="btn" on:click={sendOrderToKitchen}>An Küche senden</button>
+<svelte:head>
+	<title>Kasse</title>
+</svelte:head>
+
+<div
+	style="background-image: radial-gradient(hsla(var(--bc)/.2) .5px,hsla(var(--b2)/1) .5px); background-size: 5px 5px;"
+	class="rounded-b-box border-base-300 bg-base-200 bg-top"
+>
+	<div class="flex flex-row flex-wrap gap-4">
+		{#each toppings as item}
+			<Item {item} />
+		{/each}
 	</div>
 </div>
