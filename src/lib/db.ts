@@ -1,17 +1,14 @@
 import { env } from "$env/dynamic/public"
 import { dev } from "$app/environment"
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 
 import { createClient } from '@supabase/supabase-js'
 import { setupSupabaseHelpers } from "@supabase/auth-helpers-sveltekit"
 
-type Topping = 'Schoko' | 'Schoko+Banane' | 'Zimt+Zucker' | 'Apfelmus';
-
 export type TOrder = {
-  nr: number;
-  type: `Crepes`;
+  nr?: number;
+  product: number | TProduct,
   done: boolean;
-  topping: Topping;
   extraWish: string
 };
 
@@ -58,11 +55,14 @@ const db = {
   },
   products: {
     tableName: `products-${env.PUBLIC_SUPABASE_LOCATION}`,
+    async new(product: TProduct) {
+
+    },
     async getAll() {
       const { body } = await supabaseClient
         .from<TProduct>(db.products.tableName)
         .select('*')
-      return body
+      return body || []
     },
     async uploadImage(file: File) {
       return await supabaseClient.storage.from("product-image").upload(file.name, file)
@@ -76,24 +76,17 @@ const db = {
     async getAll() {
       const { body } = await supabaseClient
         .from<TOrder>(orderTableName)
-        .select('*')
+        .select('*, product (*)')
         .order('nr')
-      return body
+      return body || []
     },
     async get() {
       const { body } = await supabaseClient
         .from<TOrder>(orderTableName)
-        .select('*')
+        .select('*, product (*)')
         .order('nr')
         .eq('done', false)
-      return body
-    },
-    async stats() {
-      const { body } = await supabaseClient
-        .from<TOrder>(orderTableName)
-        .select('*')
-        .order('nr')
-      return body
+      return body || []
     },
     async create(order: TOrder) {
       const { body } = await supabaseClient
@@ -115,6 +108,28 @@ const db = {
 }
 
 export const orders = writable<TOrder[]>([])
+db.orders.getAll().then(res => orders.set(res))
+
+export const finishedOrders = derived(orders, $orders => $orders.filter(o => o.done))
+
+export const orderStats = derived(finishedOrders, ($orders => {
+  return [
+    ...$orders.reduce<Map<string, number>>((curr, val) => {
+      if (typeof val.product === 'number') return curr;
+
+      const toppingStats = curr.get(val.product.name) || 0;
+      curr.set(val.product.name, toppingStats + 1);
+      return curr;
+    }, new Map())
+  ].sort((a, b) => {
+    if (a[1] > b[1]) return -1;
+    if (a[1] < b[1]) return 1;
+    return 0;
+  })
+}))
+
+export const products = writable<TProduct[]>([])
+db.products.getAll().then(res => products.set(res))
 
 supabaseClient.from(orderTableName).on("INSERT", (payload) => {
   orders.update(val => {

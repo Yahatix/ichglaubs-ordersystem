@@ -5,8 +5,7 @@ const config = {
 		extend: {}
 	},
 	daisyui: {
-		themes: ['dracula', 'light'],
-		darkTheme: 'dracula'
+		theme: "dracula"
 	},
 	plugins: [require('daisyui')]
 };

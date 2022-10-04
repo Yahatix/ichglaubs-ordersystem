@@ -1,27 +1,26 @@
 <script lang="ts">
 	import { getNotificationsContext } from 'svelte-notifications';
-	import userStore, { type TOrder, orders } from '$lib/db';
+	import userStore, { type TOrder, orders, type TProduct } from '$lib/db';
+	import db from '$lib/db';
+	import { curr_formatter } from '$lib/utils';
 
 	const { addNotification } = getNotificationsContext();
 
-	export let item: TOrder['topping'];
+	export let product: TProduct;
 	let order: TOrder | undefined;
 	let extraWish: string;
 
-	const sendOrderToKitchen = (item: TOrder['topping']) => {
+	const sendOrderToKitchen = (item: TProduct) => {
 		order = {
 			done: false,
-			type: 'Crepes',
-			topping: item,
+			product: item.id,
 			extraWish
-		} as TOrder;
+		};
 
 		userStore.orders
 			.create(order)
-			.then(() => {
-				userStore.orders.get().then((o) => {
-					$orders = o as TOrder[];
-				});
+			.then(async () => {
+				$orders = await userStore.orders.get();
 			})
 			.then(() => {
 				addNotification({
@@ -44,15 +43,18 @@
 </script>
 
 <div class="card w-96 bg-base-100 shadow-xl">
-	<figure><img src={`/images/${item}_Crepes.jpg`} alt={item} width="384" height="384" /></figure>
+	<figure>
+		<img src={db.products.getImage(product.image_path)} alt={product.name} width="384" height="384" />
+	</figure>
 	<div class="card-body">
-		<h2 class="card-title">{item}</h2>
+		<h2 class="card-title">{product.name}</h2>
+		<p>{curr_formatter.format(product.price)}</p>
 		<input
 			bind:value={extraWish}
 			class="input input-bordered"
 			type="text"
 			placeholder="Sonderwünsche"
 		/>
-		<button class="btn" on:click={() => sendOrderToKitchen(item)}>Bestellen</button>
+		<button class="btn" on:click={() => sendOrderToKitchen(product)}>Bestellen</button>
 	</div>
 </div>
