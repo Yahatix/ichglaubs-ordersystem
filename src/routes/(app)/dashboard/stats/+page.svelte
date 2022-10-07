@@ -27,7 +27,7 @@
 						<div class="flex items-center space-x-3">
 							<div class="avatar">
 								<div class="mask mask-squircle h-16 w-16">
-									<img src={db.products.getImage(product.image_path)} alt={product.name} />
+									<img src={db.products.getImage(product)} alt={product.name} />
 								</div>
 							</div>
 							<div>

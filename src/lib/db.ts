@@ -76,16 +76,26 @@ const db = {
     async uploadImage(file: File) {
       return await supabaseClient.storage.from("product-image").upload(file.name, file)
     },
-    getImage(path: string) {
-      const { publicURL } = supabaseClient.storage.from("product-image").getPublicUrl(path)
+    getImage(product: TProduct) {
+      if (product.public_image_path) return product.public_image_path
+
+      const { publicURL } = supabaseClient.storage.from("product-image").getPublicUrl(product.image_path)
+
+      products.update(prs => prs.map(p => {
+        if (p.id !== product.id) return p
+        p.public_image_path = publicURL || undefined
+        return p
+      }))
+
       return publicURL
     },
-    async toggleActive(product: TProduct) {
+    async update(product: TProduct) {
+      delete product.public_image_path
       return await supabaseClient
         .from<TProduct>(db.products.tableName)
-        .update({ ...product, active: !product.active })
+        .update(product)
         .match({ id: product.id })
-    }
+    },
   },
   orders: {
     tableName: `orders-${PUBLIC_SUPABASE_LOCATION}`,

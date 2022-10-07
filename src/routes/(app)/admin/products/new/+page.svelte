@@ -9,18 +9,18 @@
 		active: false,
 		name: '',
 		price: 0,
-        image_path: ''
+		image_path: ''
 	};
 	let fileEl: HTMLInputElement;
 
-    $: validProduct = product.name !== '' && product.price !== null
+	$: validProduct = product.name !== '' && product.price !== null;
 
 	const createProduct = () => {
-        if (!fileEl.files) return;
-        product.image_path = fileEl.files[0].name
+		if (!fileEl.files) return;
+		product.image_path = fileEl.files[0].name;
 		db.products.new(product);
-        uploadImage()
-        goto("/admin/products")
+		uploadImage();
+		goto('/admin/products');
 	};
 
 	const uploadImage = () => {
@@ -64,15 +64,23 @@
 				<span class="label-text">Preis</span>
 			</label>
 		{/if}
-		<input type="number" name="price" placeholder="Preis" class="input input-bordered" bind:value={product.price}/>
+		<input
+			type="number"
+			name="price"
+			placeholder="Preis"
+			class="input input-bordered"
+			bind:value={product.price}
+		/>
 
 		<div>
 			<label class="label" for="active">
 				<span class="label-text">Aktiv?</span>
 			</label>
-			<input class="input" type="checkbox" name="" id="" bind:value={product.active}/>
+			<input class="toggle" type="checkbox" name="" id="" bind:value={product.active} />
 		</div>
-		<input bind:this={fileEl} type="file" name="" />
-        <button class="btn" class:btn-disabled={!validProduct} on:click={createProduct}>Neues Produkt anlegen</button>
+		<input class="file-input" bind:this={fileEl} type="file" name="" />
+		<button class="btn" class:btn-disabled={!validProduct} on:click={createProduct}
+			>Neues Produkt anlegen</button
+		>
 	</div>
 </div>

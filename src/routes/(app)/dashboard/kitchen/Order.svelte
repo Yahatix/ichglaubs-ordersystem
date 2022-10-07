@@ -11,7 +11,7 @@
 	<div transition:scale class="card image-full mb-4 w-fit max-w-xs shadow-xl">
 		<figure>
 			<img
-				src={db.products.getImage(order.product.image_path)}
+				src={db.products.getImage(order.product)}
 				alt={order.product.name}
 				width="384"
 				height="384"

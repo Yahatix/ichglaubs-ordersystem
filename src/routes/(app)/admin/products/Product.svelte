@@ -4,7 +4,7 @@
 
 	export let product: TProduct;
 
-	const public_image_path = db.products.getImage(product.image_path);
+	const public_image_path = db.products.getImage(product);
 
 	const handleToggleActive = () => {
 		db.products.toggleActive(product);
