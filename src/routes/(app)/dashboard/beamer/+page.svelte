@@ -1,8 +1,21 @@
 <script lang="ts">
-	import { finishedOrders, unfinishedOrders } from '$lib/dbAPI';
+	import { onMount } from 'svelte';
 	import { crossfade } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { flip } from 'svelte/animate';
+
+	import { Carousel, type CarouselControls } from 'renderless-svelte';
+
+	import { finishedOrders, unfinishedOrders } from '$lib/dbAPI';
+
+	let controls: CarouselControls;
+
+	onMount(() => {
+		const id = setInterval(() => {
+			controls.next();
+		}, 10000);
+		return () => clearInterval(id);
+	});
 
 	const [send, receive] = crossfade({
 		fallback(node) {
@@ -19,13 +32,25 @@
 			};
 		}
 	});
+
+	const images = [
+		'/images/slider/Flyer Teenkreis_Endformat.jpg',
+		'/images/slider/Flyer Teenkreis_Endformat2.jpg',
+		'/images/slider/Werbung Jugendbistro_2022.jpg',
+		'/images/slider/whatsapp.png'
+	];
 </script>
 
-<div class="flex h-full w-full flex-row">
-	<div class="flex w-1/2 flex-col items-center">Werbeblock</div>
-	<div class="flex w-1/2 flex-row justify-center gap-2">
-		<div class="flex w-1/2 flex-col items-center gap-2">
-			<h2 class="text-center text-xl font-bold underline">In bearbeitung</h2>
+<div class="grid h-full w-full grid-cols-2 gap-2">
+	<div class="flex h-full w-full items-center justify-center">
+		<!-- Werbeblock -->
+		<Carousel items={images} loop let:payload bind:controls>
+			<img src={payload} alt="" class="max-h-[calc(100vh-32px)]" />
+		</Carousel>
+	</div>
+	<div class="grid grid-cols-2 justify-center gap-2">
+		<div class="flex flex-col items-center gap-2">
+			<h2 class="mb-2 text-center text-3xl font-bold underline">In bearbeitung</h2>
 			{#each $unfinishedOrders as order (order.id)}
 				<div
 					in:receive={{ key: order.id }}
@@ -37,8 +62,8 @@
 				</div>
 			{/each}
 		</div>
-		<div class="flex w-1/2 flex-col  items-center gap-2">
-			<h2 class="text-center text-xl font-bold underline">Abholbereit</h2>
+		<div class="flex flex-col  items-center gap-2">
+			<h2 class="mb-2 text-center text-3xl font-bold underline">Abholbereit</h2>
 			{#each $finishedOrders as order (order.id)}
 				<div
 					in:receive={{ key: order.id }}

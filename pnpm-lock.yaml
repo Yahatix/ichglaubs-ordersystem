@@ -16,6 +16,7 @@ specifiers:
   postcss-load-config: ^4.0.1
   prettier: ^2.7.1
   prettier-plugin-tailwindcss: ^0.1.13
+  renderless-svelte: ^1.7.0
   svelte: ^3.50.1
   svelte-check: ^2.9.1
   svelte-icons: ^2.1.0
@@ -44,6 +45,7 @@ devDependencies:
   postcss-load-config: 4.0.1_postcss@8.4.17
   prettier: 2.7.1
   prettier-plugin-tailwindcss: 0.1.13_prettier@2.7.1
+  renderless-svelte: 1.7.0
   svelte: 3.50.1
   svelte-check: 2.9.1_ejhwqstqdwfnekvhsm3hus3z4i
   svelte-icons: 2.1.0
@@ -2022,6 +2024,10 @@ packages:
   /regexpp/3.2.0:
     resolution: {integrity: sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==}
     engines: {node: '>=8'}
+    dev: true
+
+  /renderless-svelte/1.7.0:
+    resolution: {integrity: sha512-o/7ACjTLltgUReg8qlFd8i/nw3OcnRCYCI0dI+eYNBtvm9yWd6e4wGoo6xPP5IJZ3iZOfNS+EyuoNMJPhEs/sQ==}
     dev: true
 
   /resolve-from/4.0.0:
