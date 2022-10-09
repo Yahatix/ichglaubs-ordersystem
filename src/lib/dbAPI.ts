@@ -154,7 +154,7 @@ export const total = derived(currentOrder, $currentOrder => curr_formatter.forma
   $currentOrder.reduce((curr, val) => (curr += val.product.price), 0)
 ))
 
-export const orderStats = derived(finishedOrders, ($orders => {
+export const orderStats = derived(deliveredOrders, ($orders => {
   return [
     ...$orders.flatMap(a => a.orderItem).reduce<Map<number, [Product, number]>>((curr, val) => {
       const p = val.product
