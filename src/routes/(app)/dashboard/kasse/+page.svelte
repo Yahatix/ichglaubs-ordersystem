@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Item from './Item.svelte';
-	import { products } from '$lib/dbAPI';
+	import { activeProducts, products } from '$lib/dbAPI';
 </script>
 
 <svelte:head>
@@ -8,7 +8,7 @@
 </svelte:head>
 
 <div class="flex flex-row flex-wrap justify-center gap-4 pt-8">
-	{#each $products as product}
+	{#each $activeProducts as product (product.id)}
 		<Item {product} />
 	{/each}
 </div>

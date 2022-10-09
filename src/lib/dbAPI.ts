@@ -170,6 +170,7 @@ export const orderStats = derived(deliveredOrders, ($orders => {
 }))
 
 export const products = writable<Product[]>([])
+export const activeProducts = derived(products, $products => $products.filter(p => p.active))
 db.products.getAll().then(res => products.set(res))
 
 supabaseClient.from<Product>(db.products.tableName).on("UPDATE", (payload) => {
