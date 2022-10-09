@@ -6,7 +6,7 @@
 	export let product: Product;
 	let extraWish: string = '';
 
-	const sendOrderToKitchen = () => {
+	const addProductToCurrentOrder = () => {
 		$currentOrder = [
 			...$currentOrder,
 			{
@@ -31,6 +31,6 @@
 			type="text"
 			placeholder="Sonderwünsche"
 		/>
-		<button class="btn" on:click={sendOrderToKitchen}>Bestellen</button>
+		<button class="btn" on:click={addProductToCurrentOrder}>Hinzufügen</button>
 	</div>
 </div>
