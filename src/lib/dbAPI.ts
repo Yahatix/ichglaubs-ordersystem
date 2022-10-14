@@ -107,20 +107,11 @@ const db = {
         .select('*, orderItem(extraWish, product(*))')
       return body || []
     },
-    async getByDate(day: Date) {
-      const start = new Date(day)
-      start.setHours(0, 0, 0, 0)
-      const end = new Date(day)
-      end.setHours(23, 59, 59, 999)
-
-      const datestring = (d: Date) => d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
-        ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
-
+    async getByDate(day: string) {
       const { body } = await supabaseClient
         .from<Order>(db.orders.tableName)
         .select('*, orderItem(product(*))')
-        .gt('created_at', datestring(start))
-        .lt('created_at', datestring(end))
+        .eq('created_at', day)
       return body || []
     },
     async getOrderDays() {
@@ -130,11 +121,7 @@ const db = {
         .eq("delivered", true)
         .eq("done", true)
         .order('delivered')
-      const daysWithStats = [...new Set(body?.map(d => {
-        const date = new Date(d.created_at)
-        date.setHours(0, 0, 0, 0)
-        return date.toDateString()
-      }))]
+      const daysWithStats = [...new Set(body?.map(d => d.created_at))]
       return daysWithStats
 
     },
@@ -194,11 +181,7 @@ export const orderStats = derived(deliveredOrders, ($orders => {
       curr.set(p.id, [p, toppingStats + 1]);
       return curr;
     }, new Map())
-  ].sort((a, b) => {
-    if (a[1][0] > b[1][0]) return -1;
-    if (a[1][0] < b[1][0]) return 1;
-    return 0;
-  })
+  ].sort((a, b) => b[1][1] - a[1][1])
 }))
 
 export const products = writable<Product[]>([])

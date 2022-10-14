@@ -4,7 +4,7 @@
 	import { curr_formatter } from '$lib/utils';
 
 	const getStats = async (day: string): Promise<[number, [Product, number]][]> => {
-		const statsRes = await db.orders.getByDate(new Date(day));
+		const statsRes = await db.orders.getByDate(day);
 
 		return [
 			...statsRes
@@ -14,11 +14,7 @@
 					curr.set(orderItem.product.id, [orderItem.product, toppingStats + 1]);
 					return curr;
 				}, new Map<number, [Product, number]>())
-		].sort((a, b) => {
-			if (a[0] > b[0]) return -1;
-			if (a[0] < b[0]) return 1;
-			return 0;
-		});
+		].sort((a, b) => b[1][1] - a[1][1]);
 	};
 
 	let stats: [number, [Product, number]][] = [];
