@@ -29,8 +29,8 @@
 
 <Toaster richColors position="bottom-center" duration={5000} />
 <div
-	style="background-image: radial-gradient(hsla(var(--bc)/.2) .5px,hsla(var(--b2)/1) .5px); background-size: 5px 5px;"
-	class="min-h-full w-full bg-base-200 bg-top p-4"
+	style="background-size: 5px 5px;"
+	class="min-h-full w-full bg-base-200 bg-radial from-black/2 from-[.5px] to-gray-900 bg-top p-4"
 	class:h-full={page.route.id === '/(app)/dashboard'}
 >
 	{#if data.session?.user?.id}
