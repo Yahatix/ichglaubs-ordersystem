@@ -4,19 +4,23 @@ import type { Handle } from '@sveltejs/kit';
 import { type Database } from './supabase';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.supabase = createServerClient<Database>(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, {
-		cookies: {
-			getAll() {
-				return event.cookies.getAll();
-			},
+	event.locals.supabase = createServerClient<Database>(
+		PUBLIC_SUPABASE_URL,
+		PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+		{
+			cookies: {
+				getAll() {
+					return event.cookies.getAll();
+				},
 
-			setAll(cookiesToSet) {
-				cookiesToSet.forEach(({ name, value, options }) =>
-					event.cookies.set(name, value, { ...options, path: '/' })
-				);
+				setAll(cookiesToSet) {
+					cookiesToSet.forEach(({ name, value, options }) =>
+						event.cookies.set(name, value, { ...options, path: '/' })
+					);
+				}
 			}
 		}
-	});
+	);
 
 	/**
 	 * Unlike `supabase.auth.getSession()`, which returns the session _without_

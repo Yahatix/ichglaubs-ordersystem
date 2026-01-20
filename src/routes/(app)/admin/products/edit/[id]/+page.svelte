@@ -13,13 +13,13 @@
 </script>
 
 {#if product}
-	<div class="gap-4 flex h-full w-full flex-row items-center justify-center">
+	<div class="flex h-full w-full flex-row items-center justify-center gap-4">
 		<div class="card w-96 bg-base-100 shadow-xl">
 			<figure>
 				<img src={db.products.getImage(product)} alt={product.name} width="384" height="384" />
 			</figure>
 			<div class="card-body">
-				<div class="form-control gap-2 flex flex-col">
+				<div class="form-control flex flex-col gap-2">
 					{#if product.name !== ''}
 						<label class="label" for="name" transition:fly|global={{ y: 50 }}>
 							<span class="label-text">Produktname</span>
@@ -29,7 +29,7 @@
 						type="text"
 						name="name"
 						placeholder="Produktname"
-						class="input input-bordered"
+						class="input-bordered input"
 						bind:value={product.name}
 					/>
 
@@ -42,7 +42,7 @@
 						type="number"
 						name="price"
 						placeholder="Preis"
-						class="input input-bordered"
+						class="input-bordered input"
 						bind:value={product.price}
 					/>
 					<div>

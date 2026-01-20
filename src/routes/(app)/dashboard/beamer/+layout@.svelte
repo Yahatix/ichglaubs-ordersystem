@@ -9,7 +9,7 @@
 
 <div
 	style="background-image: radial-gradient(hsla(var(--bc)/.2) .5px,hsla(var(--b2)/1) .5px); background-size: 5px 5px;"
-	class="bg-base-200 p-4 h-screen min-h-screen w-full bg-top"
+	class="h-screen min-h-screen w-full bg-base-200 bg-top p-4"
 >
 	{@render children?.()}
 </div>

@@ -13,7 +13,7 @@
 	);
 </script>
 
-<div class="pt-16 w-full overflow-x-auto">
+<div class="w-full overflow-x-auto pt-16">
 	<table class="table w-full">
 		<!-- head -->
 		<thead>
@@ -30,9 +30,9 @@
 				{@const count = stat[1][1]}
 				<tr class="hover">
 					<td>
-						<div class="space-x-3 flex items-center">
+						<div class="flex items-center space-x-3">
 							<div class="avatar">
-								<div class="mask mask-squircle h-16 w-16">
+								<div class="mask h-16 w-16 mask-squircle">
 									<img src={db.products.getImage(product)} alt={product.name} />
 								</div>
 							</div>

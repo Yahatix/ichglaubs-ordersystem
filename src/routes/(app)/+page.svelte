@@ -27,9 +27,9 @@
 		{#if form?.error}
 			<div class="notification is-danger block">{form.error}</div>
 		{/if}
-		<form method="post" use:enhance={handleSubmit} class="gap-4 flex flex-col">
-			<h1 class="mb-4 text-2xl font-bold text-center">Anmelden</h1>
-			<div class="form-control max-w-xs w-full">
+		<form method="post" use:enhance={handleSubmit} class="flex flex-col gap-4">
+			<h1 class="mb-4 text-center text-2xl font-bold">Anmelden</h1>
+			<div class="form-control w-full max-w-xs">
 				<label for="email" class="input-group">
 					<span class="label-text">Email</span>
 					<input
@@ -37,14 +37,14 @@
 						name="email"
 						autocomplete="username"
 						value={form?.values?.email ?? ''}
-						class="input input-bordered w-full"
+						class="input-bordered input w-full"
 						type="email"
 						placeholder="info@example.com"
 						required
 					/>
 				</label>
 			</div>
-			<div class="form-control max-w-xs w-full">
+			<div class="form-control w-full max-w-xs">
 				<label for="email" class="input-group">
 					<span class="label-text">Password</span>
 					<input
@@ -52,7 +52,7 @@
 						name="password"
 						autocomplete="current-password"
 						value={form?.values?.password ?? ''}
-						class="input input-bordered w-full"
+						class="input-bordered input w-full"
 						type="password"
 						placeholder="Password"
 						required

@@ -18,11 +18,11 @@
 				extraWish
 			}
 		];
-		
+
 		extraWish = '';
 	};
 	// svelte-ignore state_referenced_locally
-		const imageSrc = $state(db.products.getImage(product));
+	const imageSrc = $state(db.products.getImage(product));
 </script>
 
 <div class="card w-96 bg-base-100 shadow-xl">
@@ -34,7 +34,7 @@
 		<p>{curr_formatter.format(product.price)}</p>
 		<input
 			bind:value={extraWish}
-			class="input input-bordered"
+			class="input-bordered input"
 			type="text"
 			placeholder="Sonderwünsche"
 		/>

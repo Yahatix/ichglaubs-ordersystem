@@ -33,12 +33,12 @@
 </script>
 
 <div class="flex h-full flex-col justify-between">
-	<div class="gap-2 flex flex-col overflow-y-auto">
-		<div class="border-slate-500 p-4 flex items-center justify-between border-b-4">
+	<div class="flex flex-col gap-2 overflow-y-auto">
+		<div class="flex items-center justify-between border-b-4 border-slate-500 p-4">
 			<p class="text-xl font-bold">Bestellung:</p>
 			<button class="btn" onclick={() => close()}>X</button>
 		</div>
-		<div class="gap-2 px-4 flex flex-col">
+		<div class="flex flex-col gap-2 px-4">
 			{#each sortedOrder as order, index}
 				<div>
 					<p>{order.product.name}</p>
@@ -47,15 +47,15 @@
 					{/if}
 				</div>
 				{#if $currentOrder.length !== index + 1}
-					<hr class="border-slate-500 rounded-full border-t-2" />
+					<hr class="rounded-full border-t-2 border-slate-500" />
 				{:else}
 					<div class="mb-2"></div>
 				{/if}
 			{/each}
 		</div>
 	</div>
-	<div class="mb-4 border-slate-500 px-4 border-t-2">
+	<div class="mb-4 border-t-2 border-slate-500 px-4">
 		<p class="my-2 text-xl font-bold">Total: {$total}</p>
-		<button onclick={sendOrderToKitchen} class="btn btn-success w-full">Jetzt Bestellen</button>
+		<button onclick={sendOrderToKitchen} class="btn w-full btn-success">Jetzt Bestellen</button>
 	</div>
 </div>

@@ -32,14 +32,14 @@
 	};
 </script>
 
-<button class="btn top-4 right-4 absolute" onclick={() => (isMenuOpen = true)}>Menu</button>
+<button class="btn absolute top-4 right-4" onclick={() => (isMenuOpen = true)}>Menu</button>
 <Drawer bind:open={isMenuOpen} position="right">
-	<ul class="menu w-80 p-4 text-base-content h-full overflow-y-auto">
+	<ul class="menu h-full w-80 overflow-y-auto p-4 text-base-content">
 		<div class="flex h-full w-full flex-col justify-between">
 			<div>
 				<li>
 					<a href="/">Home</a>
-					<ul class="menu menu-compact">
+					<ul class="menu-compact menu">
 						<li><a href="/dashboard/kasse" class="pl-8">Kasse</a></li>
 						<li><a href="/dashboard/kitchen" class="pl-8">Küche</a></li>
 						<li><a href="/dashboard/beamer" class="pl-8">Beamer</a></li>
@@ -47,13 +47,13 @@
 				</li>
 				<li>
 					<a class="Products" href="/admin/products">Products</a>
-					<ul class="menu menu-compact">
+					<ul class="menu-compact menu">
 						<li><a href="/admin/products/new" class="pl-8">Neu</a></li>
 					</ul>
 				</li>
 				<li>
 					<a href="/dashboard/stats">Stats</a>
-					<ul class="menu menu-compact block">
+					<ul class="menu-compact menu block">
 						{#await statDays then days}
 							{#each days as day}
 								<li>
@@ -66,7 +66,7 @@
 			</div>
 			<li>
 				<form action="/logout" method="post" use:enhance={logout}>
-					<button class="gap-3 flex flex-row items-center" type="submit">
+					<button class="flex flex-row items-center gap-3" type="submit">
 						<div class="h-10 w-10 fill-current"><IoIosLogOut /></div>
 						<span>Abmelden</span>
 					</button>

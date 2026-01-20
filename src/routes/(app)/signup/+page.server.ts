@@ -20,9 +20,13 @@ export const actions: Actions = {
 			});
 		}
 
-		const { data, error } = await supabase.auth.signUp({email, password, options: {
-			emailRedirectTo: url.origin,
-		}});
+		const { data, error } = await supabase.auth.signUp({
+			email,
+			password,
+			options: {
+				emailRedirectTo: url.origin
+			}
+		});
 
 		if (error || !data) {
 			if (error?.status === 400) {

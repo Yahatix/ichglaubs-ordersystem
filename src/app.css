@@ -1,11 +1,9 @@
 /* Write your global styles here, in PostCSS syntax */
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@plugin "daisyui" {
+@plugin 'daisyui' {
 	themes: dracula --default;
 }
-
-;
 
 html,
 body {

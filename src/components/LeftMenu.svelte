@@ -40,12 +40,12 @@
 </script>
 
 {#if page.route.id === '/(app)/dashboard/kasse'}
-	<div class:blur-md={isDrawerOpen} class="gap-2 flex flex-wrap">
+	<div class:blur-md={isDrawerOpen} class="flex flex-wrap gap-2">
 		<button class="btn" onclick={openOrderMenu}
-			>Bestellung<span class="badge badge-success ml-1">{$total}</span></button
+			>Bestellung<span class="ml-1 badge badge-success">{$total}</span></button
 		>
 		<button class="btn mr-20" onclick={openFinishedOrderMenu}
-			>Fertig:<span class="badge badge-success ml-1">{$finishedOrders.length}</span></button
+			>Fertig:<span class="ml-1 badge badge-success">{$finishedOrders.length}</span></button
 		>
 	</div>
 	<Drawer bind:open={isDrawerOpen} close={handleDrawerClose}>

@@ -37,7 +37,7 @@
 </script>
 
 <div class="mt-14 flex h-full flex-col items-center justify-center">
-	<div class="form-control gap-2 flex flex-col">
+	<div class="form-control flex flex-col gap-2">
 		{#if product.name !== ''}
 			<label class="label" for="name" transition:fly|global={{ y: 50 }}>
 				<span class="label-text">Produktname</span>
@@ -47,7 +47,7 @@
 			type="text"
 			id="name"
 			placeholder="Produktname"
-			class="input input-bordered"
+			class="input-bordered input"
 			bind:value={product.name}
 		/>
 
@@ -59,7 +59,7 @@
 					placeholder="1"
 					step="0.5"
 					min="0"
-					class="input input-bordered"
+					class="input-bordered input"
 					bind:value={product.price}
 				/>
 				<span>EUR</span>

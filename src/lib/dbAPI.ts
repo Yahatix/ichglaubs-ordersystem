@@ -39,7 +39,7 @@ export interface Product {
 }
 export type ProductRequest = Omit<Product, 'id' | 'public_image_path'>;
 
-export const userStore = writable(await supabase.auth.getUser().then(({data}) => data?.user));
+export const userStore = writable(await supabase.auth.getUser().then(({ data }) => data?.user));
 
 supabase.auth.onAuthStateChange((event, session) => {
 	if (event == 'SIGNED_IN' && session) {
@@ -53,10 +53,10 @@ const db = {
 	products: {
 		tableName: PUBLIC_SUPABASE_PRODUCT_TABLE,
 		async new(product: ProductRequest) {
-			return await supabase.from("products").insert(product);
+			return await supabase.from('products').insert(product);
 		},
 		async getAll() {
-			const { data } = await supabase.from("products").select("*")
+			const { data } = await supabase.from('products').select('*');
 			return data || [];
 		},
 		async uploadImage(file: File) {
@@ -79,38 +79,33 @@ const db = {
 		},
 		async update(product: Product) {
 			delete product.public_image_path;
-			return await supabase
-				.from("products")
-				.update(product)
-				.match({ id: product.id });
+			return await supabase.from('products').update(product).match({ id: product.id });
 		}
 	},
 	orders: {
 		tableName: PUBLIC_SUPABASE_ORDER_TABLE,
 		async get(id: number) {
 			const { data } = await supabase
-				.from("orders")
+				.from('orders')
 				.select('*, orderItem(extraWish, product(*))')
 				.eq('id', id)
 				.single();
 			return data;
 		},
 		async getAll() {
-			const { data } = await supabase
-				.from("orders")
-				.select('*, orderItem(extraWish, product(*))');
+			const { data } = await supabase.from('orders').select('*, orderItem(extraWish, product(*))');
 			return data || [];
 		},
 		async getByDate(day: string) {
 			const { data } = await supabase
-				.from("orders")
+				.from('orders')
 				.select('*, orderItem(product(*))')
 				.eq('created_at', day);
 			return data || [];
 		},
 		async getOrderDays() {
 			const { data } = await supabase
-				.from("orders")
+				.from('orders')
 				.select('created_at')
 				.eq('delivered', true)
 				.eq('done', true)
@@ -119,7 +114,7 @@ const db = {
 			return daysWithStats;
 		},
 		async create(items: CurrentOrderItem[]) {
-			const { data } = await supabase.from("orders").insert({}).select().single();
+			const { data } = await supabase.from('orders').insert({}).select().single();
 			if (!data) return;
 			await supabase
 				.from('orderItem')
@@ -127,16 +122,10 @@ const db = {
 			return data;
 		},
 		async finishOrder(order: Order) {
-			await supabase
-				.from("orders")
-				.update({ done: true })
-				.match({ id: order.id });
+			await supabase.from('orders').update({ done: true }).match({ id: order.id });
 		},
 		async deliverOrder(order: Order) {
-			await supabase
-				.from("orders")
-				.update({ delivered: true })
-				.match({ id: order.id });
+			await supabase.from('orders').update({ delivered: true }).match({ id: order.id });
 		}
 	}
 };
@@ -146,22 +135,14 @@ db.orders.getAll().then((res) => orders.set(res));
 
 supabase.realtime
 	.channel('orders')
-	.on(
-		'postgres_changes',
-		{ event: 'INSERT', table: "orders", schema: 'public' },
-		(payload) => {
-			db.orders.get(payload.new.id).then((order) => {
-				orders.update((val) => (order ? [...val, order] : val));
-			});
-		}
-	)
-	.on(
-		'postgres_changes',
-		{ event: 'UPDATE', table: "orders", schema: 'public' },
-		(payload) => {
-			orders.update((val) => (val = val.map((p) => (p.id !== payload.new.id ? p : payload.new))));
-		}
-	)
+	.on('postgres_changes', { event: 'INSERT', table: 'orders', schema: 'public' }, (payload) => {
+		db.orders.get(payload.new.id).then((order) => {
+			orders.update((val) => (order ? [...val, order] : val));
+		});
+	})
+	.on('postgres_changes', { event: 'UPDATE', table: 'orders', schema: 'public' }, (payload) => {
+		orders.update((val) => (val = val.map((p) => (p.id !== payload.new.id ? p : payload.new))));
+	})
 	.subscribe();
 
 export const unfinishedOrders = derived(orders, ($orders) => $orders.filter((o) => !o.done));
@@ -195,13 +176,9 @@ db.products.getAll().then((res) => products.set(res));
 
 supabase.realtime
 	.channel('products')
-	.on(
-		'postgres_changes',
-		{ event: '*', table: "products", schema: 'public' },
-		(payload) => {
-			products.update((val) => (val = val.map((p) => (p.id !== payload.new.id ? p : payload.new))));
-		}
-	)
+	.on('postgres_changes', { event: '*', table: 'products', schema: 'public' }, (payload) => {
+		products.update((val) => (val = val.map((p) => (p.id !== payload.new.id ? p : payload.new))));
+	})
 	.subscribe();
 
 export default db;

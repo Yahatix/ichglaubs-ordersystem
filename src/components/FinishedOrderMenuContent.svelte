@@ -13,20 +13,20 @@
 	};
 </script>
 
-<div class="gap-2 flex flex-col overflow-y-auto">
-	<div class="border-slate-500 p-4 border-b-4">
+<div class="flex flex-col gap-2 overflow-y-auto">
+	<div class="border-b-4 border-slate-500 p-4">
 		<p class="text-xl font-bold">Fertige Bestellungen:</p>
 	</div>
-	<div class="gap-2 px-4 flex flex-col">
+	<div class="flex flex-col gap-2 px-4">
 		{#each $finishedOrders as order, index}
-			<div class="gap-2 flex w-full items-center justify-between">
-				<p class="font-bold text-xl w-full text-center">{order.id}</p>
-				<button onclick={() => sendOrderToKitchen(order)} class="btn btn-success w-40"
+			<div class="flex w-full items-center justify-between gap-2">
+				<p class="w-full text-center text-xl font-bold">{order.id}</p>
+				<button onclick={() => sendOrderToKitchen(order)} class="btn w-40 btn-success"
 					>Abgeholt</button
 				>
 			</div>
 			{#if $finishedOrders.length !== index + 1}
-				<hr class="border-slate-500 rounded-full border-t-2" />
+				<hr class="rounded-full border-t-2 border-slate-500" />
 			{:else}
 				<div class="mb-2"></div>
 			{/if}

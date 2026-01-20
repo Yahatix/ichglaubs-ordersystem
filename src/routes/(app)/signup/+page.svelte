@@ -31,37 +31,37 @@
 		<div class="notification is-primary block">{message}</div>
 	{/if}
 
-	<form method="post" use:enhance={handleSubmit} class="gap-4 flex flex-col items-center">
+	<form method="post" use:enhance={handleSubmit} class="flex flex-col items-center gap-4">
 		<h1 class="mb-4 text-2xl font-bold">Registrieren</h1>
-		<div class="form-control max-w-xs w-full">
+		<div class="form-control w-full max-w-xs">
 			<label for="email" class="input-group">
 				<span class="label-text">Email</span>
 				<input
 					id="email"
 					name="email"
 					value={values?.email ?? ''}
-					class="input input-bordered w-full"
+					class="input-bordered input w-full"
 					type="email"
 					placeholder="info@example.com"
 					required
 				/>
 			</label>
 		</div>
-		<div class="form-control max-w-xs w-full">
+		<div class="form-control w-full max-w-xs">
 			<label for="email" class="input-group w-full">
 				<span class="label-text">Password</span>
 				<input
 					id="password"
 					name="password"
 					value={values?.password ?? ''}
-					class="input input-bordered w-full"
+					class="input-bordered input w-full"
 					type="password"
 					placeholder="Password"
 					required
 				/>
 			</label>
 		</div>
-		<button disabled={loading} class="btn max-w-xs w-full">Registrieren</button>
+		<button disabled={loading} class="btn w-full max-w-xs">Registrieren</button>
 		<p class="has-text-centered">
 			Du hast schon einen Account? <a href="/">Anmelden</a>
 		</p>
