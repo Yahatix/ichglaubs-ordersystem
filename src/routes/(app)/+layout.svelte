@@ -24,7 +24,7 @@
 </script>
 
 <svelte:head>
-	<title>Ich Glaub's</title>
+	<title>Ordersystem</title>
 </svelte:head>
 
 <Toaster richColors position="bottom-center" duration={5000} />

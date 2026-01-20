@@ -4,7 +4,7 @@ Ein modernes Bestellsystem basierend auf SvelteKit, TypeScript und Supabase.
 
 ## 📋 Übersicht
 
-Das Ichglaubs Bestellsystem ist eine vollständige Webanwendung zur Verwaltung von Bestellungen. Es bietet Authentifizierung, Dashboard-Funktionalität und eine Admin-Oberfläche.
+Das Bestellsystem ist eine vollständige Webanwendung zur Verwaltung von Bestellungen. Es bietet Authentifizierung, Dashboard-Funktionalität und eine Admin-Oberfläche.
 
 ## 🚀 Features
 
@@ -20,7 +20,7 @@ Das Ichglaubs Bestellsystem ist eine vollständige Webanwendung zur Verwaltung v
 ## 📸 Screenshots
 
 ### Startseite
-![Ichglaubs Startseite](.docs/Images/home_screen.png)
+![Startseite](.docs/Images/home_screen.png)
 
 ### Küche
 Die Küchen-Ansicht zeigt alle Bestellungen in Echtzeit mit einfachen Bedienungselementen.
@@ -75,7 +75,7 @@ Das Kassen-Interface bietet eine übersichtliche Verwaltung von Bestellungen und
 
    ```bash
    git clone <repository-url>
-   cd ichglaubs-ordersystem
+   cd ordersystem
    ```
 
 2. **Dependencies installieren:**

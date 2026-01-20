@@ -1,5 +1,5 @@
 {
-	"name": "ichglaubs-ordersystem",
+	"name": "ordersystem",
 	"version": "0.0.1",
 	"type": "module",
 	"packageManager": "pnpm@10.26.1",
